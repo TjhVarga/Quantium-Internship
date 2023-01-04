@@ -1,0 +1,2 @@
+<h1>Completing an Internship with Copilot and ChatGPT</h1>
+With the GitHub Sudent Developer pack, I have access to Copilot, which I am running as a VSCode Extension. I shall attempt to complete this internship program with as little actual code writing as possible, using as much AI assistance as possible, and intervening where necessary.
