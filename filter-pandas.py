@@ -7,6 +7,10 @@ absolute_path = os.path.dirname(__file__)
 def full_path(relative_path):
     return os.path.join(absolute_path, relative_path)
 
+def write_df(dataframe, path, combined_filename):
+    dataframe.to_csv(os.path.join(path, combined_filename), encoding='utf-8', index=False)
+
+
 def filter_csv(data_folder, col_name, filtered_term):
     # Iterate over the files in the data folder
     for file in os.listdir(data_folder):
@@ -61,7 +65,7 @@ def multiply_columns(data_folder, col1, col2, result_col, dataframe):
             #return the final dataframe
             return df
 
-def combine_csv(data_folder, combined_filename, dataframe):
+def combine_csv(data_folder, dataframe):
     # Create an empty list to store the DataFrames
     df_list = []
 
@@ -79,10 +83,13 @@ def combine_csv(data_folder, combined_filename, dataframe):
     combined_df = pd.concat(df_list, ignore_index=True)
 
     # Write the combined DataFrame to a CSV file
-    combined_df.to_csv(os.path.join(data_folder, combined_filename), encoding='utf-8', index=False)
+    # combined_df.to_csv(os.path.join(data_folder, combined_filename), encoding='utf-8', index=False)
 
+    # return the final dataframe
+    return combined_df
 
-combine_csv(
-    full_path('data'), 
-    'sales_data.csv', 
-    multiply_columns(full_path('data'), 'price', 'quantity', 'sales', filter_csv(full_path('data'), 'product', 'pink morsel')))
+filtered_dataframe = filter_csv(full_path('data'), 'product', 'pink morsel')
+sales_dataframe = multiply_columns(full_path('data'), 'price', 'quantity', 'sales', filtered_dataframe)
+combined_df = combine_csv(full_path('data'), sales_dataframe)
+
+write_df(combined_df, full_path('data'), 'sales_data.csv')
