@@ -3,6 +3,7 @@ import pandas as pd
 
 #variables
 absolute_path = os.path.dirname(__file__)
+filtered_term = 'pink morsel'
 
 def full_path(relative_path):
     return os.path.join(absolute_path, relative_path)
@@ -88,8 +89,8 @@ def combine_csv(data_folder, dataframe):
     # return the final dataframe
     return combined_df
 
-filtered_dataframe = filter_csv(full_path('data'), 'product', 'pink morsel')
+filtered_dataframe = filter_csv(full_path('data'), 'product', filtered_term)
 sales_dataframe = multiply_columns(full_path('data'), 'price', 'quantity', 'sales', filtered_dataframe)
 combined_df = combine_csv(full_path('data'), sales_dataframe)
 
-write_df(combined_df, full_path('data'), 'sales_data.csv')
+write_df(combined_df, full_path('data'), filtered_term + '_sales_data.csv')
